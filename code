@@ -1,0 +1,122 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace Read
+{
+    public partial class Form1 : Form
+    {
+        public string[] fields;
+        public char delim = ',';
+        string strfilename, recordIn;
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                strfilename = openFileDialog1.FileName;
+
+
+            FileStream infile = new FileStream(strfilename, FileMode.Open,
+                FileAccess.Read);
+
+            StreamReader reader = new StreamReader(infile);
+
+            recordIn = reader.ReadLine();
+
+            while (recordIn != null)
+            {
+                      
+                fields = recordIn.Split(delim);
+                listBox1.Items.Add(fields[0]);
+                recordIn = reader.ReadLine();
+                
+
+            }
+            reader.Close();
+            infile.Close();
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FileStream infile = new FileStream(strfilename, FileMode.Open,
+                           FileAccess.Read);
+
+            StreamReader reader = new StreamReader(infile);
+
+            recordIn = reader.ReadLine();
+            while (recordIn != null)
+            {
+
+                fields = recordIn.Split(delim);
+                if (fields[0] == Convert.ToString(listBox1.SelectedItem))
+                {
+                    lblFname.Text = Convert.ToString(fields[1]);
+                    lblbranch.Text = fields[2];
+                    lblgrade.Text = fields[3];
+                    lbldiploma.Text = fields[4];
+                    lblrecord.Text = fields[5];
+                    lbldrugs.Text = fields[6];
+                    lblweight.Text = fields[7];
+                    reader.Close();
+                    infile.Close();
+                    recordIn = null;
+                }
+                else
+                    recordIn = reader.ReadLine();
+                
+
+            }
+            
+        }
+
+        private void lbldrugs_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblweight_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblFname_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblbranch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblgrade_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbldiploma_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblrecord_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
